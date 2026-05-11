@@ -1,0 +1,16 @@
+{
+  "name": "task-manager-cloudflare",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "wrangler dev --local --persist-to .wrangler/state",
+    "deploy": "wrangler deploy",
+    "db:create": "wrangler d1 create task-manager-db",
+    "db:migrate:local": "wrangler d1 execute task-manager-db --local --file=./schema.sql",
+    "db:migrate:remote": "wrangler d1 execute task-manager-db --remote --file=./schema.sql",
+    "secret:resend": "wrangler secret put RESEND_API_KEY"
+  },
+  "devDependencies": {
+    "wrangler": "latest"
+  }
+}

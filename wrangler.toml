@@ -1,0 +1,16 @@
+name = "task-manager-cloudflare"
+main = "worker.js"
+compatibility_date = "2026-05-11"
+
+# For local development, run: npm run dev
+# For deployment, create D1 first and replace database_id below:
+# wrangler d1 create task-manager-db
+
+[[d1_databases]]
+binding = "DB"
+database_name = "task-manager-db"
+database_id = "REPLACE_WITH_YOUR_D1_DATABASE_ID"
+
+[triggers]
+# Runs reminders every 6 hours, similar to your Apps Script trigger.
+crons = ["0 * * * *"]
