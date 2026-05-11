@@ -9,7 +9,7 @@ compatibility_date = "2026-05-11"
 [[d1_databases]]
 binding = "DB"
 database_name = "task-manager-db"
-database_id = "REPLACE_WITH_YOUR_D1_DATABASE_ID"
+database_id = "cc04e25d-447b-48fa-8422-d5442ce1d175"
 
 [triggers]
 # Runs reminders every 6 hours, similar to your Apps Script trigger.
