@@ -710,9 +710,9 @@
           if (task.status === 'overdue') rowClass = 'overdue-row';
 
           const flags = [
-            task.startEmailSent ? 'Start ✅' : 'Start ❌',
-            task.dueEmailSent ? 'Due ✅' : 'Due ❌',
-            task.overdueEmailSent ? 'Overdue ✅' : 'Overdue ❌'
+            task.startEmailSent ? 'Start: Sent' : 'Start: Not Sent',
+            task.dueEmailSent ? 'Due: Sent' : 'Due: Not Sent',
+            task.overdueEmailSent ? 'Overdue: Sent' : 'Overdue: Not Sent'
           ].join('<br>');
 
           return `
