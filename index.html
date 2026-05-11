@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Task Manager</title>
+
     <script>
       (function () {
         try {
@@ -14,19 +16,26 @@
         } catch (e) {}
       })();
     </script>
+
     <style>
       :root {
         color-scheme: light;
-        --bg-page: #f4f7fb;
-        --bg-soft: #eef3f9;
-        --panel-bg: #ffffff;
-        --panel-alt: #f8fafc;
+
+        --bg-page: #f6f8fc;
+        --bg-glow-1: rgba(37, 99, 235, 0.10);
+        --bg-glow-2: rgba(14, 165, 233, 0.08);
+        --bg-glow-3: rgba(99, 102, 241, 0.06);
+
+        --panel-bg: rgba(255, 255, 255, 0.82);
+        --panel-alt: rgba(248, 250, 252, 0.88);
         --text: #172033;
-        --text-muted: #6b7280;
-        --border: #e5e7eb;
-        --border-input: #cfd8e3;
-        --shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
-        --shadow-soft: 0 3px 12px rgba(15, 23, 42, 0.06);
+        --text-muted: #667085;
+        --border: rgba(15, 23, 42, 0.09);
+        --border-input: rgba(100, 116, 139, 0.30);
+
+        --shadow: 0 18px 50px rgba(15, 23, 42, 0.08);
+        --shadow-soft: 0 8px 24px rgba(15, 23, 42, 0.06);
+
         --primary: #2563eb;
         --primary-hover: #1d4ed8;
         --secondary: #64748b;
@@ -35,29 +44,38 @@
         --danger-hover: #b91c1c;
         --success: #16a34a;
         --success-hover: #15803d;
+
         --msg-success-bg: #ecfdf3;
         --msg-success-text: #166534;
         --msg-error-bg: #fef2f2;
         --msg-error-text: #991b1b;
-        --row-completed: #ecfdf3;
-        --row-starting: #fffbeb;
-        --row-overdue: #fef2f2;
-        --row-hover: #f8fafc;
+
+        --row-completed: rgba(236, 253, 243, 0.88);
+        --row-starting: rgba(255, 251, 235, 0.88);
+        --row-overdue: rgba(254, 242, 242, 0.88);
+        --row-hover: rgba(248, 250, 252, 0.92);
+
         --radius: 16px;
       }
 
       html[data-theme="dark"] {
         color-scheme: dark;
-        --bg-page: #0f172a;
-        --bg-soft: #111827;
-        --panel-bg: #161f32;
-        --panel-alt: #1e293b;
+
+        --bg-page: #070b16;
+        --bg-glow-1: rgba(59, 130, 246, 0.18);
+        --bg-glow-2: rgba(14, 165, 233, 0.12);
+        --bg-glow-3: rgba(99, 102, 241, 0.14);
+
+        --panel-bg: rgba(15, 23, 42, 0.76);
+        --panel-alt: rgba(30, 41, 59, 0.74);
         --text: #e5e7eb;
-        --text-muted: #9ca3af;
-        --border: #334155;
-        --border-input: #475569;
-        --shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
-        --shadow-soft: 0 3px 12px rgba(0, 0, 0, 0.25);
+        --text-muted: #a7b0c0;
+        --border: rgba(255, 255, 255, 0.08);
+        --border-input: rgba(148, 163, 184, 0.30);
+
+        --shadow: 0 18px 50px rgba(0, 0, 0, 0.38);
+        --shadow-soft: 0 8px 24px rgba(0, 0, 0, 0.26);
+
         --primary: #60a5fa;
         --primary-hover: #93c5fd;
         --secondary: #94a3b8;
@@ -66,26 +84,37 @@
         --danger-hover: #fca5a5;
         --success: #4ade80;
         --success-hover: #86efac;
+
         --msg-success-bg: #052e16;
         --msg-success-text: #86efac;
         --msg-error-bg: #450a0a;
         --msg-error-text: #fca5a5;
-        --row-completed: #123524;
-        --row-starting: #3b2f12;
-        --row-overdue: #3b1717;
-        --row-hover: #1e293b;
+
+        --row-completed: rgba(18, 53, 36, 0.84);
+        --row-starting: rgba(59, 47, 18, 0.84);
+        --row-overdue: rgba(59, 23, 23, 0.84);
+        --row-hover: rgba(30, 41, 59, 0.80);
       }
 
       * {
         box-sizing: border-box;
       }
 
+      html {
+        min-height: 100%;
+      }
+
       body {
         margin: 0;
+        min-height: 100vh;
         font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
-        background:
-          radial-gradient(circle at top left, rgba(37, 99, 235, 0.10), transparent 32rem),
-          var(--bg-page);
+        background-color: var(--bg-page);
+        background-image:
+          radial-gradient(circle at 50% -10%, var(--bg-glow-1), transparent 36rem),
+          radial-gradient(circle at 100% 0%, var(--bg-glow-2), transparent 28rem),
+          radial-gradient(circle at 0% 100%, var(--bg-glow-3), transparent 30rem);
+        background-repeat: no-repeat;
+        background-attachment: fixed;
         color: var(--text);
       }
 
@@ -193,6 +222,14 @@
 
       .theme-toggle {
         min-width: 116px;
+      }
+
+      .admin-panel,
+      .card,
+      .panel,
+      .table-wrap {
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
       }
 
       .admin-panel {
@@ -356,13 +393,14 @@
         overflow-x: auto;
         border: 1px solid var(--border);
         border-radius: 14px;
+        background: var(--panel-bg);
       }
 
       table {
         width: 100%;
         border-collapse: collapse;
         min-width: 960px;
-        background: var(--panel-bg);
+        background: transparent;
       }
 
       th,
@@ -469,6 +507,7 @@
       }
     </style>
   </head>
+
   <body>
     <div class="wrap">
       <div class="topbar">
@@ -611,6 +650,39 @@
         return data;
       }
 
+      function normalizeTask(task) {
+        const startDate = task.startDate || task.start_date || '';
+        const dueDate = task.dueDate || task.due_date || '';
+        const startEmailSent = Boolean(task.startEmailSent ?? task.start_email_sent);
+        const dueEmailSent = Boolean(task.dueEmailSent ?? task.due_email_sent);
+        const overdueEmailSent = Boolean(task.overdueEmailSent ?? task.overdue_email_sent);
+        const completed = Boolean(task.completed);
+
+        let status = task.status || 'normal';
+        const today = new Date().toISOString().split('T')[0];
+
+        if (!task.status) {
+          if (completed) status = 'completed';
+          else if (dueDate && dueDate < today) status = 'overdue';
+          else if (startDate && startDate === today) status = 'startingToday';
+        }
+
+        return {
+          ...task,
+          id: task.id || task.rowNumber,
+          task: task.task || '',
+          startDate,
+          dueDate,
+          email: task.email || '',
+          completed,
+          startEmailSent,
+          dueEmailSent,
+          overdueEmailSent,
+          notes: task.notes || '',
+          status
+        };
+      }
+
       function getCurrentTheme() {
         return document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
       }
@@ -640,7 +712,7 @@
 
       function showMessage(text, type) {
         const el = document.getElementById('message');
-        el.textContent = text;
+        el.textContent = text || '';
         el.className = 'message ' + type;
       }
 
@@ -665,7 +737,8 @@
 
       async function loadTasks() {
         try {
-          tasks = await api('/api/tasks');
+          const result = await api('/api/tasks');
+          tasks = (Array.isArray(result) ? result : []).map(normalizeTask);
           renderTasks();
         } catch (error) {
           showMessage(error.message, 'error');
@@ -759,7 +832,7 @@
       }
 
       function editTask(id) {
-        const task = tasks.find(t => t.id === id);
+        const task = tasks.find(t => String(t.id) === String(id));
         if (!task) {
           showMessage('Task not found.', 'error');
           return;
@@ -797,7 +870,7 @@
             ? await api('/api/tasks', { method: 'POST', body: JSON.stringify(payload) })
             : await api('/api/tasks/' + editingRow, { method: 'PUT', body: JSON.stringify(payload) });
 
-          showMessage(response.message, 'success');
+          showMessage(response.message || 'Saved successfully.', 'success');
           clearForm();
           refreshAll();
         } catch (error) {
@@ -813,7 +886,7 @@
             method: 'POST',
             body: JSON.stringify({ completed })
           });
-          showMessage(response.message, 'success');
+          showMessage(response.message || 'Updated successfully.', 'success');
         } catch (error) {
           showMessage(error.message, 'error');
         } finally {
@@ -824,7 +897,7 @@
       async function sendTest(id) {
         try {
           const response = await api('/api/tasks/' + id + '/test-email', { method: 'POST' });
-          showMessage(response.message, 'success');
+          showMessage(response.message || 'Test email sent.', 'success');
           refreshAll();
         } catch (error) {
           showMessage(error.message, 'error');
@@ -835,7 +908,7 @@
         if (!confirm('Delete this task?')) return;
         try {
           const response = await api('/api/tasks/' + id, { method: 'DELETE' });
-          showMessage(response.message, 'success');
+          showMessage(response.message || 'Deleted successfully.', 'success');
           refreshAll();
         } catch (error) {
           showMessage(error.message, 'error');
@@ -845,7 +918,7 @@
       async function runReminderCheck() {
         try {
           const response = await api('/api/reminders/run', { method: 'POST' });
-          showMessage(response.message, 'success');
+          showMessage(response.message || 'Reminder check completed.', 'success');
           refreshAll();
         } catch (error) {
           showMessage(error.message, 'error');
@@ -856,7 +929,7 @@
         if (!confirm('Reset all Start/Due/Overdue email flags?')) return;
         try {
           const response = await api('/api/admin/reset-email-flags', { method: 'POST' });
-          showMessage(response.message, 'success');
+          showMessage(response.message || 'Email flags reset.', 'success');
           refreshAll();
         } catch (error) {
           showMessage(error.message, 'error');
@@ -865,6 +938,6 @@
 
       syncThemeToggleLabel();
       refreshAll();
-</script>
+    </script>
   </body>
 </html>
